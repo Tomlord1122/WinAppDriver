@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ### Compress to one executable file
 
 ```
-pyinstaller --onefile --add-data "windowStore.py;." --add-data "windowsUpdate.py;." --add-data "Edge.py;." run_spec.py
+python -m PyInstaller --onefile --add-data "windowStore.py;." --add-data "windowsUpdate.py;." --add-data "Edge.py;." run_spec.py
 ```
 
 ### run_spec.py
