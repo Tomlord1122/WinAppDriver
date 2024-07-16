@@ -21,16 +21,21 @@ class WindowsStoreUpdateTests(unittest.TestCase):
         cls.driver.quit()
     
     def test_update_apps(self):
+        max_attempts = 720 
+        update_status = None
         self.driver.find_element_by_name("Library. Updates available").click()
         self.driver.find_element_by_name("Get updates").click()
-        while True:
+        for _ in range(max_attempts): # 720 * 10 = 7200 seconds = 2 hours, Try updating for 2 hours
             sleep(10)
             try:
-                update_status = self.driver.find_element_by_name("Your apps and games are up to date").is_displayed()
-                print(update_status)
-                if update_status:
+                update = self.driver.find_element_by_name("Your apps and games are up to date").is_displayed()
+                update_status = "up_to_date."
+                if update:
                     break
             except NoSuchElementException:
                 print("Update status element not found, continuing to check...")
                 continue
-       
+        if update_status is None:
+            self.fail("Update check timed out")
+        self.assertIsNotNone(update_status, "Can't determine the update status of Microsoft Store")
+        

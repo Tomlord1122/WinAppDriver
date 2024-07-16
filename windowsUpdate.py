@@ -21,30 +21,41 @@ class windowsUpdate(unittest.TestCase):
         cls.driver.quit()
 
     def test_open_edge(self):
-        self.driver.find_element_by_accessibility_id("SearchButton").click()
-        self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
-        self.driver.find_element_by_accessibility_id("STCheck for updates").click()
-        sleep(1)  
-    
-        # check for updates
+        update_status = None
         try:
-            update_status = self.driver.find_element_by_name("Check for updates").is_displayed()
-            if update_status:
-                self.driver.find_element_by_name("Check for updates").click()
-                while True:
-                    sleep(1)
-                    if self.driver.find_element_by_name("Download & install all").is_displayed():
+            # Open the update window
+            self.driver.find_element_by_accessibility_id("SearchButton").click()
+            self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
+            self.driver.find_element_by_accessibility_id("STCheck for updates").click()
+            sleep(2)
+
+            # Check for updates
+            max_attempts = 720
+            for _ in range(max_attempts):
+                try:
+                    if self.driver.find_element_by_name("Check for updates").is_displayed():
+                        self.driver.find_element_by_name("Check for updates").click()
+                        print("Checking for updates......")
+                    elif self.driver.find_element_by_name("Download & install all").is_displayed():
                         self.driver.find_element_by_name("Download & install all").click()
+                        print("Downloading and installing updates......")
                     elif self.driver.find_element_by_name("installing").is_displayed():
-                        print("Wait for installing updates......")
+                        print("Waiting for installing updates......")
+                    elif not self.driver.find_element_by_name("installing").is_displayed() and self.driver.find_element_by_name("Restart").is_displayed():
+                        print("Updates Complete")
+                        update_status = "Complete"
                         break
+                except NoSuchElementException:
+                    print("Waiting for updates status......")
+                sleep(10)
+            if update_status == "Complete":
+                print("Updates Complete, please restart your computer")
+            else:
+                self.assertIsNone(update_status, "Updates Failed")
         except NoSuchElementException:
-            sleep(1)
             print("No updates found")
         finally:
-            print("Close the update window")
             self.driver.find_element_by_accessibility_id("Close").click()
-
-    
-    
+            
+            
    
