@@ -34,8 +34,8 @@ def main():
     for i in range(10):
         print(f"Restarting computer in {10-i} seconds.")
         time.sleep(1)
-    # print("Restarting computer.")
-    # os.system("shutdown /r /t 1")
+    print("Restart computer.")
+    os.system("shutdown /r /t 1")
 
 
 if __name__ == '__main__':

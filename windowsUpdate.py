@@ -1,7 +1,10 @@
 import unittest
 from appium import webdriver
 from time import sleep
-from selenium.common.exceptions import NoSuchElementException
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+
+
 
 class windowsUpdate(unittest.TestCase):
     @classmethod  
@@ -26,40 +29,50 @@ class windowsUpdate(unittest.TestCase):
         self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
         self.driver.find_element_by_accessibility_id("STCheck for updates").click()
         sleep(2)
-        try:
-            # Open the update window
-           
+        max_attempts = 1440
+        for _ in range(max_attempts):
+            self.driver.find_element_by_name("Check for updates").click()
+            print("Checking for updates......")
+            sleep(10)
 
-            # Check for updates
-            max_attempts = 1440
-            for _ in range(max_attempts):
-                self.driver.find_element_by_name("Check for updates").click()
-                print("Checking for updates......")
-                sleep(10)
+            def check_element(name):
                 try:
-                    download_status = self.driver.find_element_by_name("Download & install all").is_displayed()
-                    installing_status = self.driver.find_element_by_name("installing").is_displayed()
-                    restart_status = (not installing_status and self.driver.find_element_by_name("Restart now").is_displayed()) or self.driver.find_element_by_name("You're up to date").is_displayed()
-                    if download_status:
-                        self.driver.find_element_by_name("Download & install all").click()
-                        print("Downloading and installing updates......")
-                    elif installing_status:
-                        print("Waiting for installing updates......")
-                    elif restart_status:
-                        print("Updates Complete")
-                        update_status = "Complete"
-                        break
-                except NoSuchElementException:
-                    print("Waiting for updates status......")
-               
-            if update_status == "Complete":
-                print("Updates Complete, please restart your computer")
-            else:
-                self.assertIsNone(update_status, "Updates Failed")
-        except NoSuchElementException:
-            print("No updates found")
-        finally:
-            self.driver.find_element_by_accessibility_id("Close").click()
+                    return self.driver.find_element_by_name(name).is_displayed()
+                except (TimeoutException, NoSuchElementException):
+                    return False
+
+            elements_to_check = ["Download & install all", "installing", "Restart now", "You're up to date"]
+            results = {}
+
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                future_to_element = {executor.submit(check_element, name): name for name in elements_to_check}
+                for future in as_completed(future_to_element):
+                    element_name = future_to_element[future]
+                    try:
+                        results[element_name] = future.result()
+                    except Exception as exc:
+                        results[element_name] = False
+
+            download_status = results.get("Download & install all", False)
+            installing_status = results.get("installing", False)
+            restart_status = not installing_status and results.get("Restart now", False)
+            up_to_date_status = results.get("You're up to date", False)
+
+            if download_status:
+                self.driver.find_element_by_name("Download & install all").click()
+                print("Downloading and installing updates......")
+            elif installing_status:
+                print("Waiting for installing updates......")
+            elif restart_status or up_to_date_status:
+                print("Updates Complete")
+                update_status = "Complete"
+                break
+
+        if update_status == "Complete":
+            print("Updates Complete, please restart your computer")
+        else:
+            self.assertIsNone(update_status, "Updates Failed")
+        self.driver.find_element_by_accessibility_id("Close").click()
         sleep(1)
-            
+        
    
