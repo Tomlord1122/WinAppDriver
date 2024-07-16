@@ -12,6 +12,8 @@ def create_test_suite():
     return test_suite
 
 def main():
+    os.chdir("C:\\Program Files (x86)\\Windows Application Driver")
+    os.system(".\WinAppDriver.exe")
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
     
