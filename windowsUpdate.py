@@ -20,34 +20,38 @@ class windowsUpdate(unittest.TestCase):
     def tearDownClass(cls) -> None:
         cls.driver.quit()
 
-    def test_open_edge(self):
+    def test_windows_update(self):
         update_status = None
+        self.driver.find_element_by_accessibility_id("SearchButton").click()
+        self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
+        self.driver.find_element_by_accessibility_id("STCheck for updates").click()
+        sleep(2)
         try:
             # Open the update window
-            self.driver.find_element_by_accessibility_id("SearchButton").click()
-            self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
-            self.driver.find_element_by_accessibility_id("STCheck for updates").click()
-            sleep(2)
+           
 
             # Check for updates
             max_attempts = 1440
             for _ in range(max_attempts):
+                self.driver.find_element_by_name("Check for updates").click()
+                print("Checking for updates......")
+                sleep(10)
                 try:
-                    if self.driver.find_element_by_name("Check for updates").is_displayed():
-                        self.driver.find_element_by_name("Check for updates").click()
-                        print("Checking for updates......")
-                    elif self.driver.find_element_by_name("Download & install all").is_displayed():
+                    download_status = self.driver.find_element_by_name("Download & install all").is_displayed()
+                    installing_status = self.driver.find_element_by_name("installing").is_displayed()
+                    restart_status = (not installing_status and self.driver.find_element_by_name("Restart now").is_displayed()) or self.driver.find_element_by_name("You're up to date").is_displayed()
+                    if download_status:
                         self.driver.find_element_by_name("Download & install all").click()
                         print("Downloading and installing updates......")
-                    elif self.driver.find_element_by_name("installing").is_displayed():
+                    elif installing_status:
                         print("Waiting for installing updates......")
-                    elif not self.driver.find_element_by_name("installing").is_displayed() and self.driver.find_element_by_name("Restart").is_displayed():
+                    elif restart_status:
                         print("Updates Complete")
                         update_status = "Complete"
                         break
                 except NoSuchElementException:
                     print("Waiting for updates status......")
-                sleep(10)
+               
             if update_status == "Complete":
                 print("Updates Complete, please restart your computer")
             else:
@@ -56,6 +60,6 @@ class windowsUpdate(unittest.TestCase):
             print("No updates found")
         finally:
             self.driver.find_element_by_accessibility_id("Close").click()
-            
+        sleep(1)
             
    

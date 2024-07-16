@@ -41,9 +41,11 @@ class EdgeTests(unittest.TestCase):
         max_attempts = 240  # Set the maximum number of attempts to check the update status
         update_status = None
         self.driver.find_element_by_name("Settings and more (Alt+F)").click()
+        sleep(0.5)
         self.driver.find_element_by_name("Settings").click()
+        sleep(0.5)
         self.driver.find_element_by_name("About Microsoft Edge").click()
-        
+        sleep(0.5)
         for _ in range(max_attempts):
             try:
                 if self.driver.find_element_by_name("Microsoft Edge is up to date.").is_displayed():
@@ -67,5 +69,6 @@ class EdgeTests(unittest.TestCase):
             self.fail("Update check timed out")
         
         self.assertIsNotNone(update_status, "Can't determine the update status of Edge")
+        sleep(1)
         
    

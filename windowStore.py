@@ -24,7 +24,9 @@ class WindowsStoreUpdateTests(unittest.TestCase):
         max_attempts = 720 
         update_status = None
         self.driver.find_element_by_name("Library. Updates available").click()
+        sleep(0.5)
         self.driver.find_element_by_name("Get updates").click()
+        sleep(0.5)
         for _ in range(max_attempts): # 720 * 10 = 7200 seconds = 2 hours, Try updating for 2 hours
             sleep(10)
             try:
@@ -40,4 +42,5 @@ class WindowsStoreUpdateTests(unittest.TestCase):
         if update_status is None:
             self.fail("Update check timed out")
         self.assertIsNotNone(update_status, "Can't determine the update status of Microsoft Store")
+        sleep(1)
         

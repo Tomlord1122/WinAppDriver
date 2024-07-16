@@ -12,6 +12,7 @@ def create_test_suite():
     test_suite.addTest(unittest.makeSuite(EdgeTests))
     test_suite.addTest(unittest.makeSuite(WindowsStoreUpdateTests))
     test_suite.addTest(unittest.makeSuite(windowsUpdate))
+
     return test_suite
 
 
@@ -30,11 +31,11 @@ def main():
     suite = create_test_suite()
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
-    for i in range(3):
-        print(f"Restarting computer in {3-i} seconds.")
+    for i in range(10):
+        print(f"Restarting computer in {10-i} seconds.")
         time.sleep(1)
-    print("Restarting computer.")
-    os.system("shutdown /r /t 1")
+    # print("Restarting computer.")
+    # os.system("shutdown /r /t 1")
 
 
 if __name__ == '__main__':
