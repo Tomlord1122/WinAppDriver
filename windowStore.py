@@ -28,6 +28,8 @@ class WindowsStoreUpdateTests(unittest.TestCase):
         for _ in range(max_attempts): # 720 * 10 = 7200 seconds = 2 hours, Try updating for 2 hours
             sleep(10)
             try:
+                if self.driver.find_element_by_name("Get updates").is_displayed():
+                    self.driver.find_element_by_name("Get updates").click()
                 update = self.driver.find_element_by_name("Your apps and games are up to date").is_displayed()
                 update_status = "up_to_date."
                 if update:

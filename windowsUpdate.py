@@ -30,7 +30,7 @@ class windowsUpdate(unittest.TestCase):
             sleep(2)
 
             # Check for updates
-            max_attempts = 720
+            max_attempts = 1440
             for _ in range(max_attempts):
                 try:
                     if self.driver.find_element_by_name("Check for updates").is_displayed():

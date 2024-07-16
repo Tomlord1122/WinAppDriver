@@ -4,6 +4,7 @@ from windowStore import WindowsStoreUpdateTests
 from windowsUpdate import windowsUpdate
 from Edge import EdgeTests
 import time
+import threading
 def create_test_suite():
     test_suite = unittest.TestSuite()
     test_suite.addTest(unittest.makeSuite(EdgeTests))
@@ -11,9 +12,13 @@ def create_test_suite():
     test_suite.addTest(unittest.makeSuite(windowsUpdate))
     return test_suite
 
-def main():
+def run_winappdriver():
     os.chdir("C:\\Program Files (x86)\\Windows Application Driver")
     os.system(".\WinAppDriver.exe")
+
+def main():
+    winappdriver_thread = threading.Thread(target=run_winappdriver)
+    winappdriver_thread.start()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
     
