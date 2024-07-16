@@ -10,6 +10,12 @@ This repository contains a set of automated tests for Windows applications using
 pip install -r requirements.txt
 ```
 
+### Compress to one executable file
+
+```
+pyinstaller --onefile --add-data "windowStore.py;." --add-data "windowsUpdate.py;." --add-data "Edge.py;." run_spec.py
+```
+
 ### run_spec.py
 This file is the main entry point for running the test suite. It includes the following key functions:
 - `create_test_suite()`: Creates a test suite by adding test cases from `EdgeTests`, `WindowsStoreUpdateTests`, and `windowsUpdate`.
