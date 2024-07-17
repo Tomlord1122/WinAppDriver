@@ -42,7 +42,7 @@ class EdgeTests(unittest.TestCase):
     def test_update_edge(self):
         max_attempts = 240  # Set the maximum number of attempts to check the update status
         update_status = None
-        sleep(5)
+        sleep(3)
         self.driver.find_element_by_name("Settings and more (Alt+F)").click()
         sleep(0.5)
         self.driver.find_element_by_name("Settings").click()
