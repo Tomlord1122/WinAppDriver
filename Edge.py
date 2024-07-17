@@ -28,7 +28,7 @@ class EdgeTests(unittest.TestCase):
             self.driver.find_element_by_accessibility_id("SearchButton").click()
             
             # Try to enter "Edge" in the search box
-            self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Edge")
+            self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Microsoft Edge")
             
             # Try to click the Microsoft Edge icon
             self.driver.find_element_by_accessibility_id("PPMicrosoft Edge").click()
