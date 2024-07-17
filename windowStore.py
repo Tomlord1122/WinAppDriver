@@ -31,9 +31,11 @@ class WindowsStoreUpdateTests(unittest.TestCase):
             sleep(10)
             try:
                 self.driver.find_element_by_accessibility_id("CheckForUpdatesButton").click()
+                # ActionButton
                 update = self.driver.find_element_by_accessibility_id("UpToDateMessageTitle").is_displayed()
-                update_status = "up_to_date."
+                
                 if update:
+                    update_status = "up_to_date."
                     break
             except NoSuchElementException:
                 print("Update status element not found, continuing to check...")

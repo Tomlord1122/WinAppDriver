@@ -52,6 +52,7 @@ class windowsUpdate(unittest.TestCase):
                         results[element_name] = future.result()
                     except Exception as exc:
                         results[element_name] = False
+                        print(f"An exception occurred: {exc}")
 
             download_status = results.get("Download & install all", False)
             installing_status = results.get("installing", False)

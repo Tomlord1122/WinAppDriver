@@ -9,9 +9,9 @@ import threading
 
 def create_test_suite():
     test_suite = unittest.TestSuite()
-    # test_suite.addTest(unittest.makeSuite(EdgeTests))
-    # test_suite.addTest(unittest.makeSuite(WindowsStoreUpdateTests))
     test_suite.addTest(unittest.makeSuite(windowsUpdate))
+    test_suite.addTest(unittest.makeSuite(WindowsStoreUpdateTests))
+    test_suite.addTest(unittest.makeSuite(EdgeTests))
 
     return test_suite
 
@@ -36,6 +36,7 @@ def main():
         time.sleep(1)
     print("Restart computer.")
     os.system("shutdown /r /t 1")
+    exit()
 
 
 if __name__ == '__main__':
