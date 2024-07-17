@@ -31,7 +31,7 @@ class EdgeTests(unittest.TestCase):
             self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Microsoft Edge")
             
             # Try to click the Microsoft Edge icon
-            self.driver.find_element_by_accessibility_id("PPMicrosoft Edge").click()
+            self.driver.find_element_by_accessibility_id("PPMicrosoft Edge").click()
         except NoSuchElementException as e:
             print(f"Can't find the element: {e.msg}")
             self.fail("Test failed: Can't find the element")
@@ -44,11 +44,11 @@ class EdgeTests(unittest.TestCase):
         update_status = None
         sleep(3)
         self.driver.find_element_by_name("Settings and more (Alt+F)").click()
-        sleep(0.5)
+        sleep(2)
         self.driver.find_element_by_name("Settings").click()
-        sleep(0.5)
+        sleep(2)
         self.driver.find_element_by_name("About Microsoft Edge").click()
-        sleep(0.5)
+        sleep(2)
         for _ in range(max_attempts):
 
             def check_element(name):

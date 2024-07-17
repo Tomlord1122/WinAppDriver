@@ -24,9 +24,9 @@ class WindowsStoreUpdateTests(unittest.TestCase):
         max_attempts = 720 
         update_status = None
         self.driver.find_element_by_accessibility_id("MyLibraryButton").click()
-        sleep(0.5)
+        sleep(2)
         self.driver.find_element_by_accessibility_id("CheckForUpdatesButton").click()
-        sleep(0.5)
+        sleep(2)
         for _ in range(max_attempts): # 720 * 10 = 7200 seconds = 2 hours, Try updating for 2 hours
             sleep(10)
             try:

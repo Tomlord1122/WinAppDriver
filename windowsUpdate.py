@@ -26,7 +26,9 @@ class windowsUpdate(unittest.TestCase):
     def test_windows_update(self):
         update_status = None
         self.driver.find_element_by_accessibility_id("SearchButton").click()
+        sleep(2)
         self.driver.find_element_by_accessibility_id("SearchTextBox").send_keys("Check for updates")
+        sleep(2)
         self.driver.find_element_by_accessibility_id("STCheck for updates").click()
         sleep(2)
         max_attempts = 1440
