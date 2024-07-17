@@ -1,4 +1,4 @@
 Appium-Python-Client==0.24
 selenium==3.5.0
-setuptools==28.8.0
-PyInstaller
+setuptools==70.3.0
+PyInstaller==6.9.0
