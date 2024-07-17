@@ -24,9 +24,10 @@ def run_winappdriver():
 
 def main():
     os.system('powershell -Command "Start-Process powershell -ArgumentList \'Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock -Name AllowDevelopmentWithoutDevLicense -Value 1\' -Verb RunAs"')
+    time.sleep(5)
     winappdriver_thread = threading.Thread(target=run_winappdriver)
     winappdriver_thread.start()
-    time.sleep(2)
+    time.sleep(5)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
