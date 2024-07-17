@@ -31,7 +31,7 @@ class windowsUpdate(unittest.TestCase):
         sleep(2)
         max_attempts = 1440
         for _ in range(max_attempts):
-            self.driver.find_element_by_name("Check for updates").click()
+            self.driver.find_element_by_accessibility_id("SystemSettings_MusUpdate_UpdateActionButton3_Button").click()
             print("Checking for updates......")
             sleep(10)
 

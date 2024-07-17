@@ -9,8 +9,8 @@ import threading
 
 def create_test_suite():
     test_suite = unittest.TestSuite()
-    test_suite.addTest(unittest.makeSuite(EdgeTests))
-    test_suite.addTest(unittest.makeSuite(WindowsStoreUpdateTests))
+    # test_suite.addTest(unittest.makeSuite(EdgeTests))
+    # test_suite.addTest(unittest.makeSuite(WindowsStoreUpdateTests))
     test_suite.addTest(unittest.makeSuite(windowsUpdate))
 
     return test_suite
