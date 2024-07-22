@@ -4,7 +4,7 @@ This repository contains a set of automated tests for Windows applications using
 
 ## Files Overview
 
-Before you implement this test suite, it is recommended to set the UserAccountControlSettings to never notify ensure the test suite can run without user interaction.
+Before you implement this test suite, it is recommended to set the `UserAccountControlSettings` to `never notify` to ensure the test suite can run without user interaction.
 
 ### Install Dependencies
 
